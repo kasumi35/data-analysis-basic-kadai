@@ -1,0 +1,61 @@
+!pip install japanize_matplotlib
+
+# 初回のみライブラリをインポートする
+%matplotlib inline
+import japanize_matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+
+# csvフjapanize_matplotlib ァイルをデータフレームとして読み込む
+df = pd.read_csv("/content/sample_pandas_6.csv")
+# 先頭から5行目までを表示する
+df.head()
+
+category_df = pd.read_csv('category.csv')
+category_df
+
+
+df = pd.merge(df, category_df[['商品番号', 'カテゴリー']], how='inner', on='商品番号')
+df
+
+product_num = df['商品番号'].value_counts()
+product_name = df['商品名'].value_counts()
+price = df['単価'].value_counts()
+stock = df['在庫'].value_counts()
+order = df['注文数'].value_counts()
+cate = df['カテゴリー'].value_counts()
+
+print(product_num)
+print(product_name)
+print(price)
+print(stock)
+print(order)
+print(cate)
+
+df['カテゴリー'].value_counts().plot(kind = 'bar')
+plt.title("カテゴリー")
+
+df['注文数'].value_counts().plot(kind = 'bar')
+plt.title("注文数")
+
+df['単価'].value_counts().plot(kind = 'bar')
+plt.title("単価")
+
+df['在庫'].value_counts().plot(kind = 'bar')
+plt.title("在庫")
+
+
+df['商品名'].value_counts().plot(kind = 'bar')
+plt.title("商品名")
+
+df.groupby('商品番号')['在庫'].describe()
+
+df.groupby('商品番号')['商品名'].describe()
+
+df.groupby('商品番号')['単価'].describe()
+
+df.groupby('商品番号')['単価'].describe()
+
+df.groupby('商品番号')['カテゴリー'].describe()
